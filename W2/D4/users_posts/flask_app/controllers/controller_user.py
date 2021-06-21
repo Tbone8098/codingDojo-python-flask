@@ -2,10 +2,27 @@ from flask_app import app
 from flask import render_template, redirect, request, session, flash
 from flask_app.models.model_user import User
 
+from flask_bcrypt import Bcrypt
+bcrypt = Bcrypt(app)
+
 @app.route('/user/create', methods=['POST'])
 def user_create():
     print(request.form)
-    user_id = User.create(request.form)
+
+    is_valid = User.validate_user(request.form)
+    if not is_valid:
+        return redirect('/register')
+
+    # bcrypt
+    hash_pw = bcrypt.generate_password_hash(request.form['pw'])
+
+    print(hash_pw)
+    info = {
+        **request.form,
+        "hash_pw": hash_pw
+    }
+    user_id = User.create(info)
+
     session['uuid'] = user_id
     return redirect('/')
 

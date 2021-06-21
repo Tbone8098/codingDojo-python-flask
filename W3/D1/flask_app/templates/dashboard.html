@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Find User</h1>
+    <form action="users/find" method="post">
+        <input type="text" name="first_name">
+        <button>Find</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{user.id}}</td>
+                <td>{{user.full_name()}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.created_at}}</td>
+                <td>
+                    <a href="/users/{{user.id}}">Show</a>
+                    | <a href="">Edit</a>
+                    | <a href="">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    {{all_users}}
+    <h1>All Users</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for people in all_users %}
+            <tr>
+                <td>{{people.id}}</td>
+                <td>{{people.full_name()}}</td>
+                <td>{{people.email}}</td>
+                <td>{{people.created_at}}</td>
+                <td>
+                    <a href="/users/{{people.id}}">Show</a>
+                    | <a href="/users/{{people.id}}/edit">Edit</a>
+                    | <a href="users/{{people.id}}/delete">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <a href="users/new">Create User</a>
+</body>
+</html>

@@ -1,0 +1,12 @@
+
+.menu {
+    Display: flex; 
+    justify-content: space-between;
+    margin: 0 2em;
+}
+
+.box {
+    padding: 1em;
+    margin: 1em;
+    border: 1px solid black;
+}
