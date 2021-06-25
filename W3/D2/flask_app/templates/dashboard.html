@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users and their Games</title>
+</head>
+<body>
+    <div class="menu">
+        <h1>Users and their Games</h1>
+        <a href="/logout">Logout</a>
+        <a href="/user/{{user.id}}/delete">Delete</a>
+        <a href="/user/{{user.id}}/edit">Edit</a>
+    </div>
+
+    <br>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{message}}</p>
+        {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+
+    <form action="/game/create" method="post">
+        <div>
+            <label for="name">Name of Game</label>
+            <input type="text" name="name">
+        </div>
+        <button>Create Game</button>
+    </form>
+
+    <h2>All Games</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Game</th>
+                <th>Likes</th>
+                <th>User</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for game in all_games %}
+            <tr>
+                <td>{{game.name}}</td>
+                <td>{{game.likes}}</td>
+                <td>
+                    <a href="/user/{{game.game_to_user.id}}">{{game.game_to_user.full_name()}}</a>
+                </td>
+                <td>
+                    <a href="game/{{game.id}}/like">Like</a>
+                    <a href="game/{{game.id}}/unlike">Unlike</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

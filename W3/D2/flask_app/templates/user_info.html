@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>{{user.full_name()}}</h1>
+    <a href="/">Home</a>
+
+    <p>First name: {{user.first_name}}</p>
+    <p>Last name: {{user.last_name}}</p>
+    <p>Email name: {{user.email}}</p>
+
+    <h4>List of Games</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Game</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        {% for game in users_games %}
+        <tr>
+            <td>{{game.name}}</td>
+            {% if game.game_to_user.id == session['uuid'] %}
+            <td>
+                <a href="/game/{{game.id}}/delete">Delete</a>
+                <a href="/game/{{game.id}}/edit">edit</a>
+            </td>
+            {% endif  %}
+        </tr>
+            {% endfor %}
+    </table>
+</body>
+</html>
