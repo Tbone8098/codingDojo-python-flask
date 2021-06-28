@@ -1,6 +1,6 @@
 from logging import info
 from flask_app import app
-from flask import render_template, redirect, request, session, flash
+from flask import render_template, redirect, request, session, flash, jsonify
 from flask_app.models.model_game import Game
 
 from flask_bcrypt import Bcrypt
@@ -38,7 +38,7 @@ def create_game():
     }
     game_id = Game.create(info)
 
-    return redirect('/')
+    return jsonify(message="game added")
 
 # Display Route
 @app.route('/game/<int:id>/edit')
@@ -74,7 +74,7 @@ def like_game(game_id):
         "id": game_id
     }
     Game.update_one(info)
-    return redirect('/')
+    return jsonify(message="success")
 
 @app.route('/game/<int:game_id>/unlike')
 def unlike_game(game_id):
